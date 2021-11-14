@@ -3,7 +3,6 @@ version: "3.3"
 services:
   ddclient:
     image: lscr.io/linuxserver/ddclient:latest
-    container_name: ddclient
     volumes:
       - ddclient_config:/config
     restart: always
@@ -33,6 +32,14 @@ services:
     environment:
       FOO: "bar"
 
+  data:
+    image: busybox:latest
+    volumes:
+      - ddclient_config:/data/ddclient/config
+      - nginx_data:/data/nginx/data
+      - portainer_data:/data
+    environment:
+      FOO: "bar"
 
 volumes:
   ddclient_config: {}
