@@ -1,0 +1,40 @@
+version: "3.3"
+    
+services:
+  ddclient:
+    image: lscr.io/linuxserver/ddclient:latest
+    container_name: ddclient
+    volumes:
+      - ddclient_config:/config
+    restart: always
+    environment:
+      FOO: "bar"
+      
+  portainer:
+    image: portainer/portainer-ce:latest
+    volumes:
+      - portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "8000:8000"
+      - "9443:9443"
+    restart: always
+    environment:
+      FOO: "bar"
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - nginx_data:/usr/share/html
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+    environment:
+      FOO: "bar"
+
+
+volumes:
+  ddclient_config: {}
+  portainer_data: {}
+  nginx_data: {}
