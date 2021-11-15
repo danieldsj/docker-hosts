@@ -4,11 +4,7 @@ services:
   ddclient:
     build: ./ddclient/
     container_name: host_ddclient
-    #volumes:
-      #- ddclient_config:/config
     restart: always
-    environment:
-      FOO: "bar"
       
   portainer:
     image: portainer/portainer-ce:latest
@@ -20,32 +16,14 @@ services:
       - "8000:8000"
       - "9443:9443"
     restart: always
-    environment:
-      FOO: "bar"
-
+    
   nginx:
     build: ./nginx/
     container_name: host_nginx
-    #volumes:
-      #- nginx_data:/usr/share/html
     ports:
       - "80:80"
       - "443:443"
     restart: always
-    environment:
-      FOO: "bar"
-
-  data:
-    image: busybox:latest
-    command: "tail -f /dev/null"
-    volumes:
-      - ddclient_config:/data/ddclient/config
-      - nginx_data:/data/nginx/data
-      - portainer_data:/data/portainer/data
-    environment:
-      FOO: "bar"
 
 volumes:
-  ddclient_config: {}
   portainer_data: {}
-  nginx_data: {}
