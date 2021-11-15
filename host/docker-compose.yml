@@ -2,15 +2,17 @@ version: "3.3"
     
 services:
   ddclient:
-    image: lscr.io/linuxserver/ddclient:latest
-    volumes:
-      - ddclient_config:/config
+    build: ./ddclient/
+    container_name: host_ddclient
+    #volumes:
+      #- ddclient_config:/config
     restart: always
     environment:
       FOO: "bar"
       
   portainer:
     image: portainer/portainer-ce:latest
+    container_name: host_portainer
     volumes:
       - portainer_data:/data
       - /var/run/docker.sock:/var/run/docker.sock
@@ -22,9 +24,10 @@ services:
       FOO: "bar"
 
   nginx:
-    image: nginx:latest
-    volumes:
-      - nginx_data:/usr/share/html
+    build: ./nginx/
+    container_name: host_nginx
+    #volumes:
+      #- nginx_data:/usr/share/html
     ports:
       - "80:80"
       - "443:443"
@@ -34,10 +37,11 @@ services:
 
   data:
     image: busybox:latest
+    command: "tail -f /dev/null"
     volumes:
       - ddclient_config:/data/ddclient/config
       - nginx_data:/data/nginx/data
-      - portainer_data:/data
+      - portainer_data:/data/portainer/data
     environment:
       FOO: "bar"
 
