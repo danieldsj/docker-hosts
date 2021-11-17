@@ -1,1 +1,6 @@
-ddclient.conf
+**/ddclient.conf
+**/*.crt
+**/*.csr
+**/*.key
+**/*.key.*
+**/passphrase.txt
